@@ -12,6 +12,11 @@ class districtData extends StatefulWidget {
 
 class _districtDataState extends State<districtData> {
   @override
+  void initState() {
+    // TODO: implement initState
+    readJson_district();
+    super.initState();
+  }
   late List _items=[];
 
 
@@ -29,18 +34,47 @@ class _districtDataState extends State<districtData> {
 
     Future<void> _dialogBuilder(BuildContext context,var index, value) {
       var xyz=_items[index];
+      var notes = value["notes"];
+      var active = value["active"];
+      var confirmed = value["confirmed"];
+      var migratedother = value["migratedother"];
+      var deceased = value["deceased"];
+      var recovered = value["recovered"];
+      var delta = value["delta"];
+      var delta_confirmed = delta["confirmed"];
+      var delta_deceased = delta["deceased"];
+      var delta_recovered = delta["recovered"];
+
       return showDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return Center(
             child: SingleChildScrollView(
               child: AlertDialog(
-                title:  Text("<$xyz> district details",style: TextStyle(color: Colors.red),),
+                title:  Text("$xyz district details",style: TextStyle(color: Colors.red),),
                 content: Column(
-                  children: [
-                    Text("$value",style: TextStyle(color: Colors.red),),
-                  ],
-                ),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("notes : $notes",textAlign: TextAlign.left,style: TextStyle(color: Colors.red,),),
+                      Text("active : $active",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                      Text("confirmed : $confirmed",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                      Text("migratedother : $migratedother",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                      Text("deceased : $deceased",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                      Text("recovered : $recovered",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Text("delta :- ",textAlign: TextAlign.left,style: TextStyle(color: Colors.red,),),
+                            Text("confirmed : $delta_confirmed",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                            Text(",deceased : $delta_deceased",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                            Text(",recovered : $delta_recovered",textAlign: TextAlign.left,style: TextStyle(color: Colors.red),),
+                          ],
+                        ),
+                      )
+
+                    ],
+                  ),
                 actions: <Widget>[
                   TextButton(
                     style: TextButton.styleFrom(
@@ -63,14 +97,13 @@ class _districtDataState extends State<districtData> {
     
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyanAccent,
+        backgroundColor: Colors.cyan,
         title: Text("District Data",style: TextStyle(color:Colors.red),),
       ),
       body:Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
           children: [
-            ElevatedButton(onPressed: () => readJson_district(), child: Text("Load District Data",style: TextStyle(color: Colors.red),)),
             Expanded(
               child: ListView.builder(
                   itemCount: _items.length,

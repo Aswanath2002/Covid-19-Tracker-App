@@ -96,6 +96,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.cyan,
         centerTitle: true,
         title: const Text(
           'LGM Covid-19 Tracker',style: TextStyle(color: Colors.red),
